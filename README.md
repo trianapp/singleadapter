@@ -136,5 +136,7 @@ Untuk menentukan animasi gunakan:
 # Next
 - mendukung dataBinding
 - menambah animasi
+- swipe item
+- transisi perubahan setiap item
 
 
