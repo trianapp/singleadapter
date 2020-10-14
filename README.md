@@ -79,16 +79,16 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
         }
     }
 ```
-- Untuk men-set data ke adapter
+# Untuk men-set data ke adapter
 
-Di konstruktor langsung
+    Di konstruktor langsung
 
 ```java
    List<PromoModel> data = new ArrayList<>();
    SingleAdapter<PromoMode> adapter = new SingeAdapter<>(R.layout.item_food_promo, p,data);
 ```
-Atau gunakan method ```setData``` dan ```addData```
-setData
+    Atau gunakan method ```setData``` dan ```addData```
+        setData
 ```java
 
   List<PromoModel> data = new ArrayList<>();
@@ -96,7 +96,7 @@ setData
 
 ```
 
-addData
+        addData
 
  ```java
 
@@ -105,7 +105,7 @@ addData
 
  ```
 
-#Extra
+# Extra
 - Kita bisa menambahkan animasi di adapternya(secara default menggunakan fade_in)
 - Animasi yang tersedia
 
@@ -113,12 +113,12 @@ addData
 ```SingleAnimation.fade_out```
 ```SingleAnimation.slide_left```
 ```SingleAnimation.slide_right```
-
+Untuk menentukan animasi gunakan:
 ```java
   adapter.setAnimation(SingeAdapter.SingleAnimation.fade_in);
 
 ```
-#Cara install
+# Cara install
 
 - Tambahkan JitPack repository ke build file
 
