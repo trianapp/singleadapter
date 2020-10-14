@@ -95,7 +95,6 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
   adapter.setData(data);
 ```
     addData
-
  ```java
     PromoModel data = new PromoModel();
     adapter.addData(data);
