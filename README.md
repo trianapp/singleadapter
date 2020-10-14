@@ -82,14 +82,18 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 Untuk setdata
 
 ``java
+
   List<PromoModel> data = new ArrayList<>();
   adapter.setData(data);
+
 ```
 Untuk menambah data
 
  ```java
+
     PromoModel data = new PromoModel();
     adapter.addData(data);
+    
  ```
 
 #Extra
