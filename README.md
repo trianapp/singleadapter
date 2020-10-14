@@ -1,7 +1,7 @@
 # SingleAdapter
 - Satu Adapter yang bisa digunakan berulang-ulang
 
-Cara Pakai
+- Cara Pakai
 
 ```java
 SingeAdapter<PromoModel> promo = new SingeAdapter<>(R.layout.item_food_promo, onClick);
@@ -26,7 +26,7 @@ private onEventClick<PromoModel> onClick = new onEventClick<PromoModel>() {
         }
     };
 ```
-untuk item recycler harus membuat kelas/class baru dengan ```java extends Parent  implement SingleAdapterRow<Model> ``` Seperti :
+untuk item recycler harus membuat kelas/class baru dengan ``` extends Parent  implement SingleAdapterRow<Model> ``` Seperti :
 
 ```java
 class ItemPromo extends Parent implements SingleAdapterRow<PromoModel> {
@@ -79,7 +79,7 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
         }
     }
 ```
-Untuk men-set data ke adapter
+- Untuk men-set data ke adapter
 
 Di konstruktor langsung
 
@@ -106,7 +106,13 @@ addData
  ```
 
 #Extra
-Kita bisa menambahkan animasi di adapternya
+- Kita bisa menambahkan animasi di adapternya(secara default menggunakan fade_in)
+- Animasi yang tersedia
+
+```SingleAnimation.fade_in```
+```SingleAnimation.fade_out```
+```SingleAnimation.slide_left```
+```SingleAnimation.slide_right```
 
 ```java
   adapter.setAnimation(SingeAdapter.SingleAnimation.fade_in);
@@ -114,7 +120,7 @@ Kita bisa menambahkan animasi di adapternya
 ```
 #Cara install
 
-Tambahkan JitPack repository ke build file
+- Tambahkan JitPack repository ke build file
 
 ```gradle
 	allprojects {
@@ -124,7 +130,7 @@ Tambahkan JitPack repository ke build file
 		}
 	}
 ```
-Tambahkan dependency
+- Tambahkan dependency
 ```gradle
     dependencies {
 	    ...
@@ -133,7 +139,7 @@ Tambahkan dependency
 ```
 
 # Next
-- databinding support
-- more animation
+- mendukung dataBinding
+- menambah animasi
 
 
