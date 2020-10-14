@@ -1,5 +1,5 @@
-#single adapter
-Satu Adapter untuk yang bisa digunakan berulang-ulang
+# SingleAdapter
+- Satu Adapter yang bisa digunakan berulang-ulang
 
 Cara Pakai
 
@@ -89,7 +89,7 @@ Untuk menambah data
     PromoModel data = new PromoModel();
     adapter.addData(data);
  ```
- 
+
 #Extra
 Kita bisa menambahkan animasi di adapternya
 
