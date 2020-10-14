@@ -27,11 +27,16 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
     private int lastPosition = -1;
     /*
      * event ketika item dari recycler di klik
+     *
      * @method{onEdit,onDetail,onDelete}
+     *
      * */
     private onEventClick<T> onItemClick;
     /*
-     * id layout item dari recyclerview cont: R.layout.item
+     * id layout item dari recyclerview
+     *
+     * cont: R.layout.item
+     *
      * */
     private int layoutId;
     /*
@@ -98,8 +103,11 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
     }
 
     /*
+     *
      * membangun animasi /set animasi kepada item
+     *
      *  secara default animasi menjadi fade_in
+     *
      * */
     public void setAnimation(SingleAnimation animation) {
         if (animation == null) {
