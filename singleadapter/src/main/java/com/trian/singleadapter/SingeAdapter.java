@@ -15,16 +15,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolder> {
+
     /**
-     * data for recyler item
+     * dataset for recyler item
      */
     private List<T> mDataset = new ArrayList<>();
+
+    /**
+     * untuk menentukan apakah item sudah bisa di kasih animasi
+     */
     private int lastPosition = -1;
+    /*
+     * event ketika item dari recycler di klik
+     * @method{onEdit,onDetail,onDelete}
+     * */
     private onEventClick<T> onItemClick;
+    /*
+     * id layout item dari recyclerview cont: R.layout.item
+     * */
     private int layoutId;
+    /*
+     * mendapatkan dimana recyclerview ini berada
+     * */
     private Context context;
+    /*
+     * tipe animasi dari item
+     * */
     private SingleAnimation animte;
-    private Animation animation;
 
     public enum SingleAnimation {
         fade_in,
@@ -33,6 +50,17 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
         slide_right,
     }
 
+    /*
+     * untuk animasi item dari recyclerview
+     * */
+    private Animation animation;
+
+
+    /*
+     * konstruktor untuk inisiasi adapter ada 2 tipe :
+     * @ parameter ketika diklik dan layout
+     * @ parameter ketika diklik dan dataset
+     * */
     public SingeAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event) {
         this.layoutId = layoutId;
         this.onItemClick = event;
@@ -44,6 +72,11 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
         this.setData(mDataset);
     }
 
+    /*
+     * set dataset pada adapter
+     * @ setData untuk mengisi collections
+     * @ addData untuk menambah collections
+     * */
     public void setData(List<T> mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
@@ -64,6 +97,10 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
         notifyDataSetChanged();
     }
 
+    /*
+     * membangun animasi /set animasi kepada item
+     *  secara default animasi menjadi fade_in
+     * */
     public void setAnimation(SingleAnimation animation) {
         if (animation == null) {
             throw new NullPointerException("Tolong ya kalo manggil method parameternya diisi jangan null :(");

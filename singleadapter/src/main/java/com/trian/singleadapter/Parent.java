@@ -8,6 +8,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+/*
+ *
+ *  TODO :: EXPERIMENTAL
+ *  untuk diextends file item masih dalam percobaan
+ *
+ * */
 public class Parent<T> extends LinearLayout {
 
 
