@@ -94,7 +94,7 @@ Cara install
 ```gradle
     dependencies {
 	    ...
-	    implementation 'com.github.triandamai:singleadapter:v1.0.1'
+	    implementation 'com.github.triandamai:singleadapter:v1.0.2'
     }
 ```
 
