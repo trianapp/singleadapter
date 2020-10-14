@@ -1,11 +1,12 @@
 #single adapter
+Satu Adapter untuk yang bisa digunakan berulang-ulang
 
 Cara Pakai
 
 ```java
 SingeAdapter<PromoModel> promo = new SingeAdapter<>(R.layout.item_food_promo, onClick);
 ```
-```R.layout.item_food_promo``` adalah layout item yang akan di tampilkan di recylerview dan ```onClick``` adalah:
+```R.layout.item_food_promo``` adalah layout item yang akan di tampilkan di recylerview dan ```onClick``` adalah :
 
 ```java
 private onEventClick<PromoModel> onClick = new onEventClick<PromoModel>() {
@@ -33,12 +34,12 @@ class ItemPromo extends Parent implements SingleAdapterRow<PromoModel> {
 }
 ```
 
-```Parent``` bisa diganti view lainnya misal ```LinearLayout``` atau View lain
+```Parent``` bisa diganti View lainnya misal ```LinearLayout``` atau View lain
 
 xml layout itemnya menjadi:
 
 ```xml
- <com.trian.deliveri.ui.home.ItemPromo
+ <com.trian.damai.ui.home.ItemPromo
         android:layout_height="wrap_content"
         android:layout_width="wrap_content">
 
@@ -78,9 +79,27 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
         }
     }
 ```
-Cara install
+Untuk setdata
+``java
+    List<PromoModel> data = new ArrayList<>();
+    adapter.setData(data);
+```
+Untuk menambah data
+ ```java
+    PromoModel data = new PromoModel();
+    adapter.addData(data);
+ ```
+ 
+#Extra
+Kita bisa menambahkan animasi di adapternya
 
-# Tambahkan JitPack repository ke build file
+```java
+    adapter.setAnimation(SingeAdapter.SingleAnimation.fade_in);
+
+```
+#Cara install
+
+Tambahkan JitPack repository ke build file
 
 ```gradle
 	allprojects {
@@ -90,12 +109,16 @@ Cara install
 		}
 	}
 ```
-# Tambahkan dependency
+Tambahkan dependency
 ```gradle
     dependencies {
 	    ...
 	    implementation 'com.github.triandamai:singleadapter:v1.0.2'
     }
 ```
+
+# Next
+- databinding support
+- more animation
 
 
