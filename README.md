@@ -94,7 +94,7 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
   List<PromoModel> data = new ArrayList<>();
   adapter.setData(data);
 ```
-    addData
+   addData
  ```java
     PromoModel data = new PromoModel();
     adapter.addData(data);
