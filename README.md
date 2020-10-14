@@ -4,7 +4,7 @@
 - Cara Pakai
 
 ```java
-SingeAdapter<PromoModel> promo = new SingeAdapter<>(R.layout.item_food_promo, onClick);
+SingleAdapter<PromoModel> promo = new SingleAdapter<>(R.layout.item_food_promo, onClick);
 ```
 ```R.layout.item_food_promo``` adalah layout item yang akan di tampilkan di recylerview dan ```onClick``` adalah :
 
@@ -85,7 +85,7 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 
 ```java
    List<PromoModel> data = new ArrayList<>();
-   SingleAdapter<PromoMode> adapter = new SingeAdapter<>(R.layout.item_food_promo, p,data);
+   SingleAdapter<PromoMode> adapter = new SingleAdapter<>(R.layout.item_food_promo, p,data);
 ```
    - Atau gunakan method ```setData``` dan ```addData```
 
@@ -110,7 +110,7 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 ```SingleAnimation.slide_right```
 Untuk menentukan animasi gunakan:
 ```java
-  adapter.setAnimation(SingeAdapter.SingleAnimation.fade_in);
+  adapter.setAnimation(SingleAdapter.SingleAnimation.fade_in);
 
 ```
 # Cara install

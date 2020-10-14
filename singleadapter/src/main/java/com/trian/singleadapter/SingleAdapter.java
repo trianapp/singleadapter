@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolder> {
+public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHolder> {
 
     /**
      * dataset for recyler item
@@ -66,12 +66,12 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
      * @ parameter ketika diklik dan layout
      * @ parameter ketika diklik dan dataset
      * */
-    public SingeAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event) {
+    public SingleAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event) {
         this.layoutId = layoutId;
         this.onItemClick = event;
     }
 
-    public SingeAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
+    public SingleAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
         this.layoutId = layoutId;
         this.onItemClick = event;
         this.setData(mDataset);
@@ -119,7 +119,7 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
 
     @NonNull
     @Override
-    public SingeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SingleAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         SingleAdapterRow<T> row = (SingleAdapterRow<T>) LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
         return new ViewHolder(row);
@@ -127,7 +127,7 @@ public class SingeAdapter<T> extends RecyclerView.Adapter<SingeAdapter.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SingeAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SingleAdapter.ViewHolder holder, int position) {
         holder.mrow.bindView(mDataset.get(position), this.onItemClick, position);
         setAnimation(holder.itemView, position);
     }
