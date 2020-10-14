@@ -81,28 +81,24 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 ```
 # Untuk men-set data ke adapter
 
-    Di konstruktor langsung
+  - Di konstruktor langsung
 
 ```java
    List<PromoModel> data = new ArrayList<>();
    SingleAdapter<PromoMode> adapter = new SingeAdapter<>(R.layout.item_food_promo, p,data);
 ```
-    Atau gunakan method ```setData``` dan ```addData```
-        setData
-```java
+   - Atau gunakan method ```setData``` dan ```addData```
 
+   setData
+```java
   List<PromoModel> data = new ArrayList<>();
   adapter.setData(data);
-
 ```
-
-        addData
+    addData
 
  ```java
-
     PromoModel data = new PromoModel();
     adapter.addData(data);
-
  ```
 
 # Extra
