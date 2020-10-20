@@ -7,81 +7,105 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHolder> {
+import static com.trian.singleadapter.AnimationItem.getAnimation;
 
+public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHolder> {
+    private static String TAG = SingleAdapter.class.getSimpleName()+" -> ";
     /**
-     * dataset for recyler item
-     */
+     *  dataset for recyler item
+     * */
     private List<T> mDataset = new ArrayList<>();
 
     /**
      * untuk menentukan apakah item sudah bisa di kasih animasi
      */
     private int lastPosition = -1;
-    /*
-     * event ketika item dari recycler di klik
-     *
-     * @method{onEdit,onDetail,onDelete}
-     *
-     * */
+    /**
+    * event ketika item dari recycler di klik
+    *
+    * @onEdit
+    * @onDetail
+    * @onDelete
+    *
+    **/
     private onEventClick<T> onItemClick;
-    /*
-     * id layout item dari recyclerview
-     *
-     * cont: R.layout.item
-     *
-     * */
+
+    /**
+    * @+id dari layout item yang akan ditambahkan
+    *
+    * cont: R.layout.item
+    *
+    **/
     private int layoutId;
-    /*
-     * mendapatkan dimana recyclerview ini berada
-     * */
+
+    /**
+    * mendapatkan dimana recyclerview ini berada
+    **/
     private Context context;
-    /*
-     * tipe animasi dari item
-     * */
+
+    /**
+    * tipe animasi dari item
+    **/
     private SingleAnimation animte;
 
-    public enum SingleAnimation {
-        fade_in,
-        fade_out,
-        slide_left,
-        slide_right,
-    }
+    /**
+    * recylerview for animation
+    **/
+    private RecyclerView mRecyclerView;
 
-    /*
-     * untuk animasi item dari recyclerview
-     * */
+    /**
+    * untuk animasi item dari recyclerview
+    **/
     private Animation animation;
 
 
-    /*
-     * konstruktor untuk inisiasi adapter ada 2 tipe :
-     * @ parameter ketika diklik dan layout
-     * @ parameter ketika diklik dan dataset
-     * */
-    public SingleAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event) {
+    /**
+    * konstruktor untuk inisiasi adapter ada 2 tipe :
+    * @parameter ketika diklik dan layout
+    * @parameter ketika diklik dan dataset
+    **/
+    public SingleAdapter( int layoutId, @NonNull onEventClick<T> event) {
+        if(event == null){
+            throw new NullPointerException(TAG+" onClick null!");
+        }
         this.layoutId = layoutId;
         this.onItemClick = event;
     }
 
-    public SingleAdapter(@IntegerRes int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
+    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
+        if(event == null){
+            throw new NullPointerException(TAG+" onClick null!");
+        }
+        if(mDataset == null){
+            throw new NullPointerException(TAG+" data set null!");
+        }
         this.layoutId = layoutId;
         this.onItemClick = event;
         this.setData(mDataset);
     }
-
     /*
-     * set dataset pada adapter
-     * @ setData untuk mengisi collections
-     * @ addData untuk menambah collections
-     * */
+    * set rv
+    *
+    * */
+    public SingleAdapter withRecyclerView(RecyclerView rv){
+        if(rv == null){
+            throw new NullPointerException("Recycler view onNull");
+        }
+        this.mRecyclerView = rv;
+        this.mRecyclerView.setAdapter(this);
+        return this;
+    }
+    /**
+    * set dataset pada adapter
+    * @setData untuk mengisi collections
+    * @addData untuk menambah collections
+    * */
     public void setData(List<T> mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
@@ -101,17 +125,15 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         }
         notifyDataSetChanged();
     }
-
-    /*
-     *
-     * membangun animasi /set animasi kepada item
-     *
-     *  secara default animasi menjadi fade_in
-     *
-     * */
+    /**
+    *
+    * membangun animasi
+    *  secara default animasi menjadi fade_in
+    *
+    * */
     public void setAnimation(SingleAnimation animation) {
         if (animation == null) {
-            throw new NullPointerException("Tolong ya kalo manggil method parameternya diisi jangan null :(");
+            throw new NullPointerException(TAG+" animation null!");
         } else {
             this.animte = animation;
         }
@@ -129,37 +151,13 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull SingleAdapter.ViewHolder holder, int position) {
         holder.mrow.bindView(mDataset.get(position), this.onItemClick, position);
-        setAnimation(holder.itemView, position);
-    }
-
-    private void setAnimation(View itemView, int position) {
         if (position > lastPosition) {
-            if (animte != null) {
-                switch (animte) {
-                    case fade_in:
-                        animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                        break;
-                    case fade_out:
-                        animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
-                        break;
-                    case slide_left:
-                        animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-                        break;
-                    case slide_right:
-                        animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
-                        break;
-                    default:
-                        animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-                }
-
-            } else {
-                animation = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
-            }
-            itemView.setAnimation(animation);
+           holder.itemView.setAnimation(getAnimation(animte,context));
             lastPosition = position;
         }
-
     }
+
+
 
     @Override
     public int getItemCount() {

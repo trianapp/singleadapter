@@ -3,6 +3,7 @@ package com.trian.singleadapter;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -14,8 +15,8 @@ import androidx.annotation.RequiresApi;
  *  untuk diextends file item masih dalam percobaan
  *
  * */
-public class Parent extends LinearLayout {
-
+public class Parent extends LinearLayout{
+    private Button btn;
 
     public Parent(Context context) {
         super(context);
@@ -33,5 +34,6 @@ public class Parent extends LinearLayout {
     public Parent(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
 
 }
