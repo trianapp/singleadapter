@@ -110,19 +110,38 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-        if (mDataset != null) {
+
+            this.mDataset.clear();
             this.mDataset.addAll(mDataset);
-        }
+
         notifyDataSetChanged();
 
     }
+    public void setData(T mDataset) {
+        if (this.mDataset == null) {
+            this.mDataset = new ArrayList<>();
+        }
 
+            this.mDataset.clear();
+            this.mDataset.add(mDataset);
+
+        notifyDataSetChanged();
+    }
     public void addData(T mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
-        } else {
-            this.mDataset.add(mDataset);
         }
+        this.mDataset.add(mDataset);
+
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<T> mDataset){
+        if (this.mDataset == null) {
+            this.mDataset = new ArrayList<>();
+        }
+        this.mDataset.addAll(mDataset);
+
         notifyDataSetChanged();
     }
     /**
