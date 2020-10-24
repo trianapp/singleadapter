@@ -35,10 +35,10 @@ out/
 .gradle/
 build/
 # class
-TestActivity.java
-ItemTest.java
-activity_test.xml
-itemtest.xml
+singleadapter/src/main/java/com/trian/singleadapter/TestActivity.java
+singleadapter/src/main/java/com/trian/singleadapter/ItemTest.java
+singleadapter/src/main/res/layout/activity_test.xml
+singleadapter/src/main/res/layout/itemtest.xml
 # Local configuration file (sdk path, etc)
 local.properties
 
