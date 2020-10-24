@@ -4,24 +4,14 @@
 - Cara Pakai
 
 ```java
-SingleAdapter<PromoModel> promo = new SingleAdapter<>(R.layout.item_food_promo, onClick);
+SingleAdapter<PromoModel> promoAdapter = new SingleAdapter<>(R.layout.item_food_promo, onEventClick).withRecyclerView(rv);
 ```
 ```R.layout.item_food_promo``` adalah layout item yang akan di tampilkan di recylerview dan ```onClick``` adalah :
 
 ```java
-private onEventClick<PromoModel> onClick = new onEventClick<PromoModel>() {
+   private onEventClick<PromoModel> onEventClick = new onEventClick<PromoModel>() {
         @Override
-        public void onEdit(PromoModel payload, int position) {
-
-        }
-
-        @Override
-        public void onDetail(PromoModel payload, int position) {
-
-        }
-
-        @Override
-        public void onDelete(PromoModel payload, int position) {
+        public void onClick(onEventType eventType, String payload, int position) {
 
         }
     };
@@ -64,19 +54,17 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
         tv = (Button) findViewById(R.id.textview);
 
     }
-
     @Override
     public void bindView(PromoModel data, onEventClick<PromoModel> eventClick, int position) {
-        // disini setdata ke view
-        // contoh:
-        tv.setText(data.getTitle());
-        btn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            eventClick.onDetail(data,position);
-                        }
-                    });
-        }
+         // disini setdata ke view
+         // contoh:
+         tv.setText(data.getTitle());
+         btn.setOnClickListener(new OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 eventClick.onClick(onEventType.onDetail,data,position);
+             }
+         });
     }
 ```
 # Untuk men-set data ke adapter
@@ -91,13 +79,22 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 
    setData
 ```java
+  //data
   List<PromoModel> data = new ArrayList<>();
+  PromoModel model = new ArrayList<>();
+
+  //setdata
   adapter.setData(data);
+  adapter.setData(model);
 ```
    addData
  ```java
-    PromoModel data = new PromoModel();
+ //data
+    List<PromoModel> data = new ArrayList<>();
+    PromoModel model = new PromoModel();
+//adddata
     adapter.addData(data);
+    adapter.addData(model);
  ```
 
 # Extra
@@ -106,8 +103,8 @@ kemudian implement ``` binView``` dan ```onFinishInflate ```
 
 ```SingleAnimation.fade_in```
 ```SingleAnimation.fade_out```
-```SingleAnimation.slide_left```
-```SingleAnimation.slide_right```
+```SingleAnimation.slide_in_left```
+```SingleAnimation.slide_out_right```
 Untuk menentukan animasi gunakan:
 ```java
   adapter.setAnimation(SingleAdapter.SingleAnimation.fade_in);
@@ -129,7 +126,7 @@ Untuk menentukan animasi gunakan:
 ```gradle
     dependencies {
 	    ...
-	    implementation 'com.github.triandamai:singleadapter:v1.0.3'
+	    implementation 'com.github.triandamai:singleadapter:v1.0.4'
     }
 ```
 

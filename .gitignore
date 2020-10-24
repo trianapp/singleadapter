@@ -34,7 +34,11 @@ out/
 # Gradle files
 .gradle/
 build/
-
+# class
+TestActivity.java
+ItemTest.java
+activity_test.xml
+itemtest.xml
 # Local configuration file (sdk path, etc)
 local.properties
 

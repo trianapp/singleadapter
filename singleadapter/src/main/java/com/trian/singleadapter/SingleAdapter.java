@@ -1,11 +1,13 @@
 package com.trian.singleadapter;
 
 import android.content.Context;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,7 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
      * untuk menentukan apakah item sudah bisa di kasih animasi
      */
     private int lastPosition = -1;
+    private int positionAnim = 0;
     /**
     * event ketika item dari recycler di klik
     *
@@ -52,17 +55,12 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     /**
     * tipe animasi dari item
     **/
-    private SingleAnimation animte;
+    private SingleAnimation animate;
 
     /**
     * recylerview for animation
     **/
     private RecyclerView mRecyclerView;
-
-    /**
-    * untuk animasi item dari recyclerview
-    **/
-    private Animation animation;
 
 
     /**
@@ -93,13 +91,13 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     * set rv
     *
     * */
-    public SingleAdapter withRecyclerView(RecyclerView rv){
+    public SingleAdapter<T> withRecyclerView(RecyclerView rv){
         if(rv == null){
             throw new NullPointerException("Recycler view onNull");
         }
         this.mRecyclerView = rv;
         this.mRecyclerView.setAdapter(this);
-        return this;
+        return (SingleAdapter<T>) this;
     }
     /**
     * set dataset pada adapter
@@ -154,7 +152,7 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (animation == null) {
             throw new NullPointerException(TAG+" animation null!");
         } else {
-            this.animte = animation;
+            this.animate = animation;
         }
     }
 
@@ -170,12 +168,45 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     @Override
     public void onBindViewHolder(@NonNull SingleAdapter.ViewHolder holder, int position) {
         holder.mrow.bindView(mDataset.get(position), this.onItemClick, position);
+
         if (position > lastPosition) {
-           holder.itemView.setAnimation(getAnimation(animte,context));
+            Handler handler = new Handler(Looper.myLooper());
+            handler.postDelayed(() -> {
+                startAnimation(holder.itemView,position);
+            },800);
             lastPosition = position;
         }
     }
 
+    private void startAnimation(View itemview,final int pos) {
+        positionAnim = pos;
+        Animation animation =getAnimation(animate,context);
+        animation.setInterpolator(context, android.R.interpolator.bounce);
+
+        itemview.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                positionAnim++;
+                if(positionAnim < mDataset.size()){
+                    if(itemview != null){
+                        startAnimation(itemview,positionAnim);
+                    }
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
 
 
     @Override
