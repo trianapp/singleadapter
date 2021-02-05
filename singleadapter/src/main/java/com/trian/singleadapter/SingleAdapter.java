@@ -1,7 +1,6 @@
 package com.trian.singleadapter;
 
 import android.content.Context;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,10 +18,13 @@ import java.util.List;
 import static com.trian.singleadapter.AnimationItem.getAnimation;
 
 public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHolder> {
-    private static String TAG = SingleAdapter.class.getSimpleName()+" -> ";
+    private static String TAG = SingleAdapter.class.getSimpleName() + " -> ";
     /**
-     *  dataset for recyler item
-     * */
+     * dataset for recyler item
+     *
+     * @see ArrayList
+     * @see List
+     */
     private List<T> mDataset = new ArrayList<>();
 
     /**
@@ -30,101 +33,163 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     private int lastPosition = -1;
     private int positionAnim = 0;
     /**
-    * event ketika item dari recycler di klik
-    *
-    * @onEdit
-    * @onDetail
-    * @onDelete
-    *
-    **/
+     * event ketika item dari recycler di klik
+     *
+     * @see onEventClick
+     **/
     private onEventClick<T> onItemClick;
 
     /**
-    * @+id dari layout item yang akan ditambahkan
-    *
-    * cont: R.layout.item
-    *
-    **/
+     * @+id dari layout item yang akan ditambahkan
+     * <p>
+     * cont: R.layout.item
+     **/
     private int layoutId;
 
     /**
-    * mendapatkan dimana recyclerview ini berada
-    **/
+     * mendapatkan dimana recyclerview ini berada
+     **/
     private Context context;
 
     /**
-    * tipe animasi dari item
-    **/
+     * tipe animasi dari item
+     **/
     private SingleAnimation animate;
 
     /**
-    * recylerview for animation
-    **/
+     * recylerview for animation
+     **/
     private RecyclerView mRecyclerView;
+    /***
+     * diffUtil
+     * */
+    private SingleDiffCallback<T> diffCallback;
 
 
     /**
-    * konstruktor untuk inisiasi adapter ada 2 tipe :
-    * @parameter ketika diklik dan layout
-    * @parameter ketika diklik dan dataset
-    **/
-    public SingleAdapter( int layoutId, @NonNull onEventClick<T> event) {
-        if(event == null){
-            throw new NullPointerException(TAG+" onClick null!");
+     * konstruktor untuk inisiasi adapter ada 2 tipe :
+     *
+     * @param layoutId ketika diklik dan layout
+     * @param event    ketika diklik dan dataset
+     **/
+    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event) {
+        if (event == null) {
+            throw new NullPointerException(TAG + " onClick null!");
         }
         this.layoutId = layoutId;
         this.onItemClick = event;
     }
 
-    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
-        if(event == null){
-            throw new NullPointerException(TAG+" onClick null!");
+    /**
+     * konstruktor untuk inisiasi adapter ada 2 tipe :
+     *
+     * @param layoutId     ketika diklik dan layout
+     * @param event        ketika diklik dan dataset
+     * @param diffCallback
+     **/
+    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event, SingleDiffCallback<T> diffCallback) {
+        if (event == null) {
+            throw new NullPointerException(TAG + " onClick null!");
         }
-        if(mDataset == null){
-            throw new NullPointerException(TAG+" data set null!");
+        this.layoutId = layoutId;
+        this.onItemClick = event;
+        this.diffCallback = diffCallback;
+    }
+
+    /**
+     * konstruktor untuk inisiasi adapter ada 2 tipe :
+     *
+     * @param layoutId ketika diklik dan layout
+     * @param event    ketika diklik dan dataset
+     * @param mDataset List data
+     * @see List
+     * @see ArrayList
+     **/
+
+
+    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event, List<T> mDataset) {
+        if (event == null) {
+            throw new NullPointerException(TAG + " onClick null!");
+        }
+        if (mDataset == null) {
+            throw new NullPointerException(TAG + " data set null!");
         }
         this.layoutId = layoutId;
         this.onItemClick = event;
         this.setData(mDataset);
     }
+
     /*
-    * set rv
-    *
-    * */
-    public SingleAdapter<T> withRecyclerView(RecyclerView rv){
-        if(rv == null){
+     * set rv *Experimantal
+     *
+     * */
+    public SingleAdapter<T> withRecyclerView(RecyclerView rv) {
+        if (rv == null) {
             throw new NullPointerException("Recycler view onNull");
         }
         this.mRecyclerView = rv;
         this.mRecyclerView.setAdapter(this);
         return (SingleAdapter<T>) this;
     }
+
     /**
-    * set dataset pada adapter
-    * @setData untuk mengisi collections
-    * @addData untuk menambah collections
-    * */
+     * set dataset pada adapter
+     *
+     * @param mDataset data untuk mengisi collections
+     * @see List
+     * @see ArrayList
+     */
     public void setData(List<T> mDataset) {
+
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-
+        if (diffCallback != null) {
+            diffCheck();
+        } else {
             this.mDataset.clear();
             this.mDataset.addAll(mDataset);
+            notifyDataSetChanged();
 
-        notifyDataSetChanged();
-
+        }
     }
+
+    /***
+     * cek apakah diff util ada
+     * */
+    private void diffCheck() {
+        diffCallback.setOldModels(this.mDataset);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+        diffResult.dispatchUpdatesTo(SingleAdapter.this);
+    }
+
+    /**
+     * set object to dataset pada adapter
+     *
+     * @param mDataset data untuk menambah collections
+     * @see List
+     * @see ArrayList
+     */
     public void setData(T mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-
+        if (diffCallback != null) {
+            diffCheck();
+        } else {
             this.mDataset.clear();
             this.mDataset.add(mDataset);
-
+        }
         notifyDataSetChanged();
     }
+
+    /**
+     * set object to dataset pada adapter
+     *
+     * @param mDataset data untuk menambah collections
+     * @see List
+     * @see ArrayList
+     */
     public void addData(T mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
@@ -134,23 +199,33 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         notifyDataSetChanged();
     }
 
-    public void addData(List<T> mDataset){
+    /**
+     * set collection to dataset pada adapter
+     *
+     * @param mDataset data untuk mengisi collections
+     * @see List
+     * @see ArrayList
+     */
+    public void addData(List<T> mDataset) {
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-        this.mDataset.addAll(mDataset);
+        if (diffCallback != null) {
+            diffCheck();
+        } else {
+            this.mDataset.addAll(mDataset);
+        }
 
         notifyDataSetChanged();
     }
+
     /**
-    *
-    * membangun animasi
-    *  secara default animasi menjadi fade_in
-    *
-    * */
+     * membangun animasi
+     * secara default animasi menjadi fade_in
+     */
     public void setAnimation(SingleAnimation animation) {
         if (animation == null) {
-            throw new NullPointerException(TAG+" animation null!");
+            throw new NullPointerException(TAG + " animation null!");
         } else {
             this.animate = animation;
         }
@@ -172,15 +247,15 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (position > lastPosition) {
             Handler handler = new Handler(Looper.myLooper());
             handler.postDelayed(() -> {
-                startAnimation(holder.itemView,position);
-            },800);
+                startAnimation(holder.itemView, position);
+            }, 800);
             lastPosition = position;
         }
     }
 
-    private void startAnimation(View itemview,final int pos) {
+    private void startAnimation(View itemview, final int pos) {
         positionAnim = pos;
-        Animation animation =getAnimation(animate,context);
+        Animation animation = getAnimation(animate, context);
         animation.setInterpolator(context, android.R.interpolator.bounce);
 
         itemview.startAnimation(animation);
@@ -194,9 +269,9 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
             public void onAnimationEnd(Animation animation) {
 
                 positionAnim++;
-                if(positionAnim < mDataset.size()){
-                    if(itemview != null){
-                        startAnimation(itemview,positionAnim);
+                if (positionAnim < mDataset.size()) {
+                    if (itemview != null) {
+                        startAnimation(itemview, positionAnim);
                     }
                 }
             }
