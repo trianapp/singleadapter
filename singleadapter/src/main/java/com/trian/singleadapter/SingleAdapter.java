@@ -145,7 +145,7 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
             this.mDataset = new ArrayList<>();
         }
         if (diffCallback != null) {
-            diffCheck();
+            diffCheck(mDataset);
         } else {
             this.mDataset.clear();
             this.mDataset.addAll(mDataset);
@@ -157,8 +157,8 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
     /***
      * cek apakah diff util ada
      * */
-    private void diffCheck() {
-        diffCallback.setOldModels(this.mDataset);
+    private void diffCheck(@NonNull List<T> data) {
+        diffCallback.setModels(this.mDataset, data);
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         diffResult.dispatchUpdatesTo(SingleAdapter.this);
     }
@@ -175,7 +175,9 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
             this.mDataset = new ArrayList<>();
         }
         if (diffCallback != null) {
-            diffCheck();
+            List<T> data = new ArrayList<>();
+            data.add(mDataset);
+            diffCheck(data);
         } else {
             this.mDataset.clear();
             this.mDataset.add(mDataset);
@@ -211,7 +213,7 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
             this.mDataset = new ArrayList<>();
         }
         if (diffCallback != null) {
-            diffCheck();
+            diffCheck(mDataset);
         } else {
             this.mDataset.addAll(mDataset);
         }
