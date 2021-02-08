@@ -14,7 +14,7 @@ public class SingleGridLayoutManager extends GridLayoutManager {
 
     }
 
-    public void setCloumnWidth(int newCloumnWidth) {
+    public void setColumnWidth(int newCloumnWidth) {
         if (newCloumnWidth > 0 && newCloumnWidth != columnWidth) {
             columnWidth = newCloumnWidth;
             columnWidthChanged = true;
