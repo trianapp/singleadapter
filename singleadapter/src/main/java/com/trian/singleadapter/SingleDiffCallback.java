@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
 
-public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
+public class SingleDiffCallback<Model> extends DiffUtil.Callback {
     private List<Model> oldModels;
     private List<Model> newModels;
 
@@ -39,14 +39,8 @@ public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return itemsSameCheck(oldItemPosition, newItemPosition);
+        return false;
     }
 
-    /***
-     * cek apakah masing-masing item sama
-     * @param oldPosition
-     * @param newPosition
-     * @return item same /equal
-     * */
-    abstract boolean itemsSameCheck(int oldPosition, int newPosition);
+
 }
