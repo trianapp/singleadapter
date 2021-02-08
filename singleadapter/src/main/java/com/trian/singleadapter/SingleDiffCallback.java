@@ -10,6 +10,13 @@ public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
     private List<Model> oldModels;
     private List<Model> newModels;
 
+    public List<Model> getOldModels() {
+        return oldModels;
+    }
+
+    public List<Model> getNewModels() {
+        return newModels;
+    }
 
     public void setModels(@NonNull List<Model> oldModels, @NonNull List<Model> newModels) {
         this.oldModels = oldModels;
