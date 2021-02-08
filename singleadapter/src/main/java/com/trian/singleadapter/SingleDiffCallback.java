@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
 
-public class SingleDiffCallback<Model> extends DiffUtil.Callback {
+public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
     private List<Model> oldModels;
     private List<Model> newModels;
 
