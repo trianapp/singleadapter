@@ -5,32 +5,26 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
+import java.util.Objects;
 
-public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
+public class SingleDiffCallback<Model> extends DiffUtil.Callback {
     private List<Model> oldModels;
     private List<Model> newModels;
 
-    public List<Model> getOldModels() {
-        return oldModels;
-    }
 
-    public List<Model> getNewModels() {
-        return newModels;
-    }
-
-    public void setModels(@NonNull List<Model> oldModels, @NonNull List<Model> newModels) {
+    public SingleDiffCallback(@NonNull List<Model> oldModels, @NonNull List<Model> newModels) {
         this.oldModels = oldModels;
         this.newModels = newModels;
     }
 
     @Override
     public int getOldListSize() {
-        return oldModels.size();
+        return oldModels == null ? 0 : oldModels.size();
     }
 
     @Override
     public int getNewListSize() {
-        return newModels.size();
+        return newModels == null ? 0 : newModels.size();
     }
 
     @Override
@@ -46,7 +40,7 @@ public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return false;
+        return Objects.deepEquals(oldModels.get(oldItemPosition), newModels.get(newItemPosition));
     }
 
 }

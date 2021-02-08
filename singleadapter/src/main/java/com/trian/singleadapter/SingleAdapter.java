@@ -60,10 +60,6 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
      * recylerview for animation
      **/
     private RecyclerView mRecyclerView;
-    /***
-     * diffUtil
-     * */
-    private SingleDiffCallback<T> diffCallback;
 
 
     /**
@@ -80,21 +76,6 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         this.onItemClick = event;
     }
 
-    /**
-     * konstruktor untuk inisiasi adapter ada 2 tipe :
-     *
-     * @param layoutId     ketika diklik dan layout
-     * @param event        ketika diklik dan dataset
-     * @param diffCallback
-     **/
-    public SingleAdapter(int layoutId, @NonNull onEventClick<T> event, SingleDiffCallback<T> diffCallback) {
-        if (event == null) {
-            throw new NullPointerException(TAG + " onClick null!");
-        }
-        this.layoutId = layoutId;
-        this.onItemClick = event;
-        this.diffCallback = diffCallback;
-    }
 
     /**
      * konstruktor untuk inisiasi adapter ada 2 tipe :
@@ -119,18 +100,6 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         this.setData(mDataset);
     }
 
-    /*
-     * set rv *Experimantal
-     *
-     * */
-    public SingleAdapter<T> withRecyclerView(RecyclerView rv) {
-        if (rv == null) {
-            throw new NullPointerException("Recycler view onNull");
-        }
-        this.mRecyclerView = rv;
-        this.mRecyclerView.setAdapter(this);
-        return (SingleAdapter<T>) this;
-    }
 
     /**
      * set dataset pada adapter
@@ -144,24 +113,33 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-        if (diffCallback != null) {
-            diffCheck(mDataset);
-        } else {
-            this.mDataset.clear();
-            this.mDataset.addAll(mDataset);
-            notifyDataSetChanged();
 
+        this.mDataset.clear();
+        this.mDataset.addAll(mDataset);
+        notifyDataSetChanged();
+
+
+    }
+
+
+    /**
+     * set dataset pada adapter apakah data sudah ada
+     *
+     * @param mDataset data untuk mengisi collections
+     * @see List
+     * @see ArrayList
+     */
+    public void setDataWithDiff(List<T> mDataset) {
+
+        if (this.mDataset == null) {
+            this.mDataset = new ArrayList<>();
         }
+
+        this.diffCheck(mDataset);
+
+
     }
 
-    /***
-     * cek apakah diff util ada
-     * */
-    private void diffCheck(@NonNull List<T> data) {
-        diffCallback.setModels(this.mDataset, data);
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-        diffResult.dispatchUpdatesTo(SingleAdapter.this);
-    }
 
     /**
      * set object to dataset pada adapter
@@ -174,15 +152,26 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-        if (diffCallback != null) {
-            List<T> data = new ArrayList<>();
-            data.add(mDataset);
-            diffCheck(data);
-        } else {
-            this.mDataset.clear();
-            this.mDataset.add(mDataset);
-        }
+
+        this.mDataset.clear();
+        this.mDataset.add(mDataset);
         notifyDataSetChanged();
+    }
+
+    /**
+     * set object to dataset pada adapter dengan check apakah data sudah ada
+     *
+     * @param mDataset data untuk menambah collections
+     * @see List
+     * @see ArrayList
+     */
+    public void setDataWithDiff(T mDataset) {
+        if (this.mDataset == null) {
+            this.mDataset = new ArrayList<>();
+        }
+        List<T> data = new ArrayList<>();
+        data.add(mDataset);
+        diffCheck(data);
     }
 
     /**
@@ -212,13 +201,19 @@ public class SingleAdapter<T> extends RecyclerView.Adapter<SingleAdapter.ViewHol
         if (this.mDataset == null) {
             this.mDataset = new ArrayList<>();
         }
-        if (diffCallback != null) {
-            diffCheck(mDataset);
-        } else {
-            this.mDataset.addAll(mDataset);
-        }
+
+        this.mDataset.addAll(mDataset);
+
 
         notifyDataSetChanged();
+    }
+
+    /***
+     * cek apakah diff util ada
+     * */
+    private void diffCheck(@NonNull List<T> data) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SingleDiffCallback<>(this.mDataset, data));
+        diffResult.dispatchUpdatesTo(SingleAdapter.this);
     }
 
     /**
