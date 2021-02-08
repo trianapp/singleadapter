@@ -42,5 +42,4 @@ public abstract class SingleDiffCallback<Model> extends DiffUtil.Callback {
         return false;
     }
 
-
 }
