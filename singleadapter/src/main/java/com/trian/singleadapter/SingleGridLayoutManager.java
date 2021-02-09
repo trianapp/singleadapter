@@ -11,7 +11,7 @@ public class SingleGridLayoutManager extends GridLayoutManager {
 
     public SingleGridLayoutManager(Context context, int columnWidth) {
         super(context, 1);
-
+        setColumnWidth(columnWidth);
     }
 
     public void setColumnWidth(int newCloumnWidth) {
