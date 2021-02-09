@@ -15,7 +15,7 @@ import androidx.annotation.RequiresApi;
  *  untuk diextends file item masih dalam percobaan
  *
  * */
-public class Parent extends LinearLayout{
+public class Parent extends LinearLayout {
     private Button btn;
 
     public Parent(Context context) {

@@ -28,7 +28,7 @@ public class SingleGridLayoutManager extends GridLayoutManager {
             if (getOrientation() == VERTICAL) {
                 totalSpace = getWidth() - getPaddingRight() - getPaddingLeft();
             } else {
-                totalSpace = getWidth() - getPaddingTop() - getPaddingBottom();
+                totalSpace = getHeight() - getPaddingTop() - getPaddingBottom();
 
             }
             int spanCount = Math.max(1, totalSpace / columnWidth);
