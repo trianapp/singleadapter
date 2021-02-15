@@ -126,7 +126,7 @@ Untuk menentukan animasi gunakan:
 ```gradle
     dependencies {
 	    ...
-	    implementation 'com.github.triandamai:singleadapter:v1.0.4'
+	    implementation 'com.github.triandamai:singleadapter:v1.0.15'
     }
 ```
 
