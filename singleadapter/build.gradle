@@ -4,23 +4,34 @@ plugins {
     id 'kotlin-android'
     id 'maven-publish'
 }
-
 apply from:'../common.gradle'
 group = "com.github.trianapp"
+
+task androidSourcesJar(type: Jar) {
+    classifier 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
 
 dependencies {
 //todo add dependencies here
 }
-
 afterEvaluate {
-    publishing{
-        publications{
-            release(MavenPublication){
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
                 from components.release
-
-                groupId = 'app.trian'
+                groupId = 'com.github.trianapp'
                 artifactId = 'singleadapter'
-                version = '1.0.19'
+                version = 'v1.0.21'
             }
         }
     }

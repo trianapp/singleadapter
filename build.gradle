@@ -15,7 +15,6 @@ buildscript {
     dependencies {
         classpath(Libs.GradlePlugin.androidGradlePlugin)
         classpath(Libs.GradlePlugin.kotlinGradlePlugin)
-      //  classpath(Libs.GradlePlugin.mavenGradlePlugin)
 
 
     }
@@ -29,7 +28,6 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "https://maven.google.com" }
 
-
     }
 
 }
@@ -37,11 +35,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-tasks.withType(Test){
-    testLogging {
-        exceptionFormat "full"
-        events "started", "skipped", "passed", "failed"
-        showStandardStreams true
-    }
-}
+
 
