@@ -5,7 +5,6 @@ plugins {
     id 'maven-publish'
 }
 apply from:'../common.gradle'
-group = "com.github.trianapp"
 
 task androidSourcesJar(type: Jar) {
     classifier 'sources'
@@ -23,15 +22,12 @@ repositories {
 dependencies {
 //todo add dependencies here
 }
-afterEvaluate {
+project.afterEvaluate {
     publishing {
         publications {
-            // Creates a Maven publication called "release".
             release(MavenPublication) {
                 from components.release
-                groupId = 'com.github.trianapp'
-                artifactId = 'singleadapter'
-                version = 'v1.0.21'
+                artifact androidSourcesJar // optional sources
             }
         }
     }
