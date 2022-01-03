@@ -35,13 +35,6 @@ class MainActivity : AppCompatActivity() {
             ItemModel(name = "item 4", code = 4),
             ItemModel(name = "item 5", code = 5),
         ))
-        adapter.addData(listOf(
-            ItemModel(name = "item 1", code = 1),
-            ItemModel(name = "item 2", code = 2),
-            ItemModel(name = "item 3", code = 3),
-            ItemModel(name = "item 4", code = 4),
-            ItemModel(name = "item 5", code = 5),
-        ))
 
 
     }
