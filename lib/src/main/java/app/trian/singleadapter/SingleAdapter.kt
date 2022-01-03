@@ -24,10 +24,12 @@ class SingleAdapter<Model>(
 
     lateinit var context:Context
     /**
-     * for manipulate data
+     * assign new data and notify data changed.
+     *
+     * <p>if you want to add data without losing existing data use @see SingleAdapter.addData</p>.
      *
      * @see List
-     * */
+     */
     @SuppressLint("NotifyDataSetChanged")
     fun setData(data:List<Model>){
         dataSet = emptyList()
@@ -35,6 +37,13 @@ class SingleAdapter<Model>(
         notifyDataSetChanged()
     }
 
+    /**
+     * assign new data and notify data changed.
+     *
+     * <p>if you want to replace data exist with new data use @see SingleAdapter.setData.</p>
+     *
+     * @see List
+     */
     @SuppressLint("NotifyDataSetChanged")
     fun addData(data: List<Model>){
         dataSet = dataSet + data
