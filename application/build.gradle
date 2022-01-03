@@ -8,7 +8,8 @@ apply from:'../common.gradle'
 
 dependencies {
     //todo add dependencies here
-implementation project(':lib')
+    implementation project(':lib')
     //implementation "com.github.trianapp:singleadapter:v1.0.19"
+
 
 }

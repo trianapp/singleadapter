@@ -24,22 +24,27 @@
 `MainActivity.kt`
 ```kotlin
 class MainActivity : AppCompatActivity() {
+    
     lateinit var recyclerView:RecyclerView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //init recyclerview
         recyclerView = findViewById(R.id.rv)
 
+        //create singleadapter object
        val adapter = SingleAdapter<ItemModel>(R.layout.item_view){
                item,position, args ->
            //on item clicked
            Toast.makeText(this,item.name,LENGTH_LONG).show()
        }
 
-        //
+        //set adapter and layout manager
         recyclerView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         recyclerView.adapter = adapter
 
+        //set data into adapter
         adapter.setData(listOf(
             ItemModel(name = "item 1", code = 1),
             ItemModel(name = "item 2", code = 2),
@@ -79,15 +84,19 @@ class MainActivity : AppCompatActivity() {
 `ItemView.kt`
 ```kotlin
 class ItemView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), SingleAdapterItem<ItemModel>{
+    
     private lateinit var text:TextView
     private lateinit var parent:LinearLayout
+    
     override fun onFinishInflate() {
         super.onFinishInflate()
+        //init view
         text = findViewById(R.id.tv)
         parent = findViewById(R.id.ly_parent)
 
     }
     override fun bindView(data: ItemModel, position: Int, onClick: (data: ItemModel,position:Int, arg: Any) -> Unit) {
+        //set data into view and listen event listener from here
         text.text = data.name
         parent.setOnClickListener {
             onClick(data,position,1)
