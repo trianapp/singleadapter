@@ -27,6 +27,7 @@ object Versions {
 
 object Libs{
     object GradlePlugin{
+        val mavenGradlePlugin = "com.github.dcendents:android-maven-gradle-plugin:1.5"
         val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
         val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
