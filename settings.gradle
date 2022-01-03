@@ -1,5 +1,4 @@
-//include ':singleadapter'
-//include ':app'
+
 include ':buildsrc'
 rootProject.name = "SingleAdapter"
 include ':application'

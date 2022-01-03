@@ -34,6 +34,7 @@ object Libs{
     object AndroidX{
         var coreKtx = "androidx.core:core-ktx:1.7.0"
         var appCompat = "androidx.appcompat:appcompat:1.4.0"
+        var recyclerView ="androidx.recyclerview:recyclerview:1.1.0"
     }
     object Google{
         var material = "com.google.android.material:material:1.4.0"

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.trian.application.ItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+   <LinearLayout
+       android:id="@+id/ly_parent"
+       android:layout_marginTop="16dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+       <TextView
+           android:id="@+id/tv"
+           android:layout_width="match_parent"
+           android:text="hai"
+           android:layout_height="wrap_content"/>
+   </LinearLayout>
+</app.trian.application.ItemView>
