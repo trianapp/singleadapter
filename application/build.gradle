@@ -1,9 +1,10 @@
 import app.trian.dependencies.*
 plugins {
-    id 'com.android.library'
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
 }
- apply from:'../common.gradle'
+apply from:'../common.gradle'
 
 dependencies {
 
