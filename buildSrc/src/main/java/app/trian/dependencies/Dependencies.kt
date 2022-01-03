@@ -17,7 +17,7 @@ object Releases{
  * Arranged alphabetically
  */
 object Versions {
-    val kotlinVersion = "1.5.21"
+    val kotlinVersion = "1.4.31"
     val safeArgs = "2.2.2"
     val compileSdkVersion = 31
     val buildTool = "28"
@@ -27,8 +27,8 @@ object Versions {
 
 object Libs{
     object GradlePlugin{
-        val androidGradlePlugin = "com.android.tools.build:gradle:7.0.1"
-        val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+        val androidGradlePlugin = "com.android.tools.build:gradle:7.0.4"
+        val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
 
     object AndroidX{
