@@ -16,7 +16,6 @@ buildscript {
         classpath(Libs.GradlePlugin.androidGradlePlugin)
         classpath(Libs.GradlePlugin.kotlinGradlePlugin)
 
-
     }
 }
 allprojects {

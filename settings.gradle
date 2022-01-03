@@ -2,4 +2,4 @@
 include ':buildsrc'
 rootProject.name = "SingleAdapter"
 include ':application'
-include ':singleadapter'
+include ':lib'
