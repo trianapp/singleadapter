@@ -10,6 +10,7 @@ import app.trian.singleadapter.AnimatedItem
 import app.trian.singleadapter.SingleAdapter
 import app.trian.singleadapter.SingleAdapterAnimation
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var rv:RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
            Toast.makeText(this,item.name,LENGTH_LONG).show()
 
        }
+
         rv.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         rv.adapter = adapter
 
